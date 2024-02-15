@@ -1,0 +1,26 @@
+.wrapper {
+  @apply mx-auto flex w-full flex-col items-start justify-start space-y-3 p-6;
+}
+
+.category {
+  @apply bg-white px-4 py-1 align-middle text-center font-semibold text-slate-600 rounded text-sm border-b-4 border-sky-300;
+}
+
+.menu-wrapper {
+  @apply grid grid-cols-3 w-full max-w-2xl items-center gap-8 pb-3 sm:mx-0 sm:grid-cols-5;
+}
+
+.menu-link {
+  @apply relative h-24 w-24 select-none rounded-md bg-slate-400 overflow-hidden shadow transition-all ease-out hover:bg-orange-300 hover:shadow-lg;
+}
+.menu-content {
+  @apply flex h-full flex-col items-center justify-start pt-2;
+}
+
+.menu-title {
+  @apply text-center mt-auto align-middle flex items-center justify-center text-xxs font-semibold text-slate-500 bg-slate-100 w-full h-9 py-1 px-2 leading-3;
+}
+
+.menu-icon {
+  @apply text-white h-full;
+}

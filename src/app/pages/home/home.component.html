@@ -1,0 +1,32 @@
+<div class="wrapper">
+  <strong class="category">Apps</strong>
+  <div class="menu-wrapper">
+    @for (app of apps; track app.id) {
+    <a routerLink="/app{{ app.href }}" class="menu-link">
+      <div class="menu-content">
+        <lucide-icon
+          class="text-white h-full"
+          name="{{ app.icon }}"
+          [size]="20"
+        />
+        <span class="menu-title">{{ app.title }}</span>
+      </div>
+    </a>
+    }
+  </div>
+  <strong class="category">Manages</strong>
+  <div class="menu-wrapper">
+    @for (manage of manages; track manage.id) {
+    <a routerLink="/manage{{ manage.href }}" class="menu-link">
+      <div class="menu-content">
+        <lucide-icon
+          class="text-white h-full"
+          name="{{ manage.icon }}"
+          [size]="20"
+        />
+        <span class="menu-title">{{ manage.title }}</span>
+      </div>
+    </a>
+    }
+  </div>
+</div>
