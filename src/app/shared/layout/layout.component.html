@@ -1,0 +1,22 @@
+<!-- BASE -->
+<div class="base">
+  <!-- CONTAINER -->
+  <div class="wrapper">
+    <!-- HEADER -->
+    <div class="header">
+      <a routerLink="/">
+        <img src="./assets/favicon.png" alt="logo" />
+        <span>Engineshop Assistant</span>
+      </a>
+      <div>
+        <a routerLink="login">
+          <lucide-icon class="text-red h-full" name="log-in" [size]="14" />
+        </a>
+      </div>
+    </div>
+    <!-- CONTENT -->
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
