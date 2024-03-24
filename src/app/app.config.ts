@@ -4,6 +4,8 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { routes } from './app.routes';
 import {
+   ArrowDown,
+  ArrowUp,
   DatabaseZap,
   FileCog,
   FlaskRound,
@@ -33,6 +35,8 @@ export const appConfig: ApplicationConfig = {
         PackageCheck,
         TableProperties,
         LogIn,
+        ArrowUp,
+        ArrowDown
       })
     ),
   ],
