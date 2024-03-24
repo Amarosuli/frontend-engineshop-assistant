@@ -1,0 +1,206 @@
+@if(activeLayer.includes("form-create")) {
+<div
+	[@fadeIn]
+	class="parent absolute z-30 inset-0 bg-slate-700/50 justify-end flex overflow-hidden"
+	(click)="hide($event, 'form-create')">
+	<div
+		[@slideIn]
+		class="absolute w-full md:w-3/5 xl:w-2/5 h-full bg-white items-center overflow-y-auto flex flex-col py-4">
+		<p class="font-bold text-lg pt-8">Create Customer</p>
+		<form
+			(ngSubmit)="saveCustomer()"
+			[formGroup]="customerForm"
+			class="w-full md:w-[90%] xl:w-[80%] px-10 pt-4 flex flex-col space-y-2">
+			<label for="customerName" class="flex flex-col text-sm gap-1">
+				Customer Name
+				<input
+					id="customerName"
+					type="text"
+					formControlName="name"
+					class="bg-slate-100 outline-none border-opacity-0 border-b focus:border-sky-500 text-sm px-3 py-2 transition-colors"
+					[ngClass]="
+						customerForm.get('name')?.invalid &&
+						customerForm.get('name')?.touched
+							? 'border-red-500 border-opacity-100'
+							: ''
+					" />
+				@if (customerForm.get('name')?.invalid &&
+				customerForm.get('name')?.touched) {
+				<p class="text-red-500 text-xs italic">*</p>
+				}
+			</label>
+			<label for="description" class="flex flex-col text-sm gap-1">
+				Description
+				<input
+					id="description"
+					type="text"
+					formControlName="description"
+					class="bg-slate-100 outline-none border-opacity-0 border-b focus:border-sky-500 text-sm px-3 py-2 transition-colors" />
+			</label>
+			<label for="alias" class="flex flex-col text-sm gap-1 pb-2">
+				Alias
+				<input
+					id="alias"
+					type="text"
+					formControlName="alias"
+					class="bg-slate-100 outline-none border-opacity-0 border-b focus:border-sky-500 text-sm px-3 py-2 transition-colors" />
+			</label>
+			<div class="w-full flex justify-between items-center gap-3">
+				<button
+					type="reset"
+					class="cancel-btn px-4 py-2.5 text-sm bg-slate-300 active:bg-slate-400 mx-auto w-1/2 transition-colors"
+					(click)="hide($event, 'form-create')">
+					Cancel
+				</button>
+				<input
+					type="submit"
+					class="px-4 py-2.5 text-sm bg-sky-300 active:bg-sky-400 mx-auto w-1/2 transition-colors" />
+			</div>
+		</form>
+	</div>
+</div>
+} @if(activeLayer.includes("form-edit")) {
+<div
+	[@fadeIn]
+	class="parent absolute z-30 inset-0 bg-slate-700/50 justify-end flex overflow-hidden"
+	(click)="hide($event, 'form-edit')">
+	<div
+		[@slideIn]
+		class="absolute w-full md:w-3/5 xl:w-2/5 h-full bg-white items-center overflow-y-auto flex flex-col py-4">
+		<p class="font-bold text-lg pt-8">Edit Customer</p>
+		<form
+			(submit)="saveCustomer()"
+			[formGroup]="customerForm"
+			class="w-full md:w-[90%] xl:w-[80%] px-10 pt-4 flex flex-col space-y-2">
+			<label for="customerName" class="flex flex-col text-sm gap-1">
+				Customer Name
+				<input
+					id="customerName"
+					type="text"
+					formControlName="name"
+					class="bg-slate-100 outline-none border-opacity-0 border-b focus:border-sky-500 text-sm px-3 py-2 transition-colors" />
+			</label>
+			<label for="description" class="flex flex-col text-sm gap-1">
+				Description
+				<input
+					id="description"
+					type="text"
+					formControlName="description"
+					class="bg-slate-100 outline-none border-opacity-0 border-b focus:border-sky-500 text-sm px-3 py-2 transition-colors" />
+			</label>
+			<label for="alias" class="flex flex-col text-sm gap-1 pb-2">
+				Alias
+				<input
+					id="alias"
+					type="text"
+					formControlName="alias"
+					class="bg-slate-100 outline-none border-opacity-0 border-b focus:border-sky-500 text-sm px-3 py-2 transition-colors" />
+			</label>
+			<div class="w-full flex justify-between items-center gap-3">
+				<button
+					type="reset"
+					class="cancel-btn px-4 py-2.5 text-sm bg-slate-300 active:bg-slate-400 mx-auto w-1/2 transition-colors"
+					(click)="hide($event, 'form-edit')">
+					Cancel
+				</button>
+				<input
+					type="submit"
+					class="px-4 py-2.5 text-sm bg-sky-300 active:bg-sky-400 mx-auto w-1/2 transition-colors" />
+			</div>
+		</form>
+	</div>
+</div>
+}
+
+<div class="flex w-full justify-between h-full overflow-hidden">
+	<div class="w-1/6 h-full bg-slate-200 divide-y divide-white">
+		<p
+			class="w-full text-sm font-semibold cursor-pointer hover:bg-slate-100 px-4 py-4 items-center flex"
+			>Menu</p
+		>
+		<p
+			class="w-full text-sm font-semibold cursor-pointer hover:bg-slate-100 px-4 py-4 items-center flex"
+			>Home</p
+		>
+		<p
+			class="w-full text-sm font-semibold cursor-pointer hover:bg-slate-100 px-4 py-4 items-center flex"
+			>Engine List</p
+		>
+		<p
+			class="w-full text-sm font-semibold cursor-pointer hover:bg-slate-100 px-4 py-4 items-center flex"
+			>Engine Preservation</p
+		>
+	</div>
+	<div class="w-full">
+		<div class="my-3 w-full flex justify-center items-center">
+			<div
+				class="mx-auto w-[80%] rounded-lg mb-2 bg-slate-200 p-4 flex justify-between">
+				<h1 class="text-2xl font-bold text-slate-600">Customer Data</h1>
+				<div class="space-x-2">
+					<button
+						class="text-sm px-4 py-2 bg-blue-300"
+						(click)="show('form-create')">
+						Add Data
+					</button>
+					<button
+						class="text-sm px-4 py-2 bg-blue-300"
+						(click)="show('form-create')">
+						Column
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="mx-auto w-[80%] rounded-lg overflow-hidden">
+			<table>
+				<thead>
+					@for (headerRow of headerRows(); track $index) {
+					<tr role="row">
+						@for (cell of headerRow.cells; track $index){
+						<th
+							role="columnheader"
+							[colSpan]="cell.colspan"
+							(click)="cell.state.sort(cell.id)">
+							{{ cell.header }}
+							<span class="absolute gap-2">
+								@if (cell.state.sortOrder() === 'asc') {
+								<lucide-icon
+									class="text-slate-600 h-full"
+									name="arrow-down"
+									[size]="18" />
+								} @else if (cell.state.sortOrder() === 'desc') {
+								<lucide-icon
+									class="text-slate-600 h-full"
+									name="arrow-up"
+									[size]="18" />
+								}
+							</span>
+						</th>
+						}
+					</tr>
+					}
+				</thead>
+				<tbody>
+					@for (bodyRow of bodyRows(); track $index) {
+					<tr role="row" (click)="showEditForm(bodyRows)">
+						@for (cell of bodyRow.cells(); track $index) {
+						<td role="cell">{{ cell.value }}</td>
+						}
+					</tr>
+					}
+				</tbody>
+			</table>
+			<div
+				class="justify-between items-center w-full h-12 flex bg-slate-200 overflow-hidden">
+				<button
+					class="px-8 py-4 hover:bg-sky-300 text-sm font-semibold transition-colors"
+					>Next</button
+				>
+				<button
+					class="px-8 py-4 hover:bg-sky-300 text-sm font-semibold transition-colors"
+					>Prev</button
+				>
+			</div>
+		</div>
+	</div>
+</div>
