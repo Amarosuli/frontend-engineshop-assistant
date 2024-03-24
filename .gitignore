@@ -11,6 +11,9 @@
 npm-debug.log
 yarn-error.log
 
+# Experiment
+/archived
+
 # IDEs and editors
 .idea/
 .project
@@ -19,7 +22,7 @@ yarn-error.log
 *.launch
 .settings/
 *.sublime-workspace
-.prettierc
+.prettierrc
 .prettierignore
 
 # Visual Studio Code
