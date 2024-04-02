@@ -1,34 +1,34 @@
 .base {
-  @apply relative flex h-screen w-screen items-center justify-center bg-cover bg-sky-300;
+	@apply relative flex h-screen w-screen items-center justify-center bg-cover bg-sky-300;
 }
 
 .wrapper {
-  @apply absolute flex h-full w-full flex-shrink-0 flex-grow-0 flex-col bg-slate-50 2xl:h-[95vh] 2xl:w-[95vw];
+	@apply relative h-full w-full flex-shrink-0 flex-grow-0  bg-slate-300 2xl:h-[95vh] 2xl:w-[95vw];
 }
 
 .content {
-  @apply relative h-full w-full;
+	@apply relative pt-[4rem] h-full w-full;
 }
 
 .header {
-  @apply relative flex h-[4rem] shrink-0 select-none items-center justify-between bg-slate-300 p-4;
+	@apply absolute z-30 w-full flex h-[4rem] shrink-0 select-none items-center justify-between bg-white p-4;
 
-  a {
-    @apply flex select-none w-max items-center justify-center space-x-2 pl-4;
+	a {
+		@apply flex select-none w-max items-center justify-center space-x-2 pl-4;
 
-    img {
-      @apply w-10;
-    }
-    span {
-      @apply hidden text-sm font-bold tracking-wider text-slate-700 transition-colors duration-100 ease-linear hover:text-slate-800 lg:block;
-    }
-  }
+		img {
+			@apply w-10;
+		}
+		span {
+			@apply hidden text-sm font-bold tracking-wider text-slate-700 transition-colors duration-100 ease-linear hover:text-slate-800 lg:block;
+		}
+	}
 
-  div {
-    @apply flex w-max gap-4 mr-4 text-xs;
+	div {
+		@apply flex w-max gap-4 mr-4 text-xs;
 
-    a {
-      @apply bg-slate-200 py-2 px-4 hover:bg-blue-300 transition-colors ease-out border border-slate-700;
-    }
-  }
+		a {
+			@apply bg-slate-200 py-2 px-4 hover:bg-blue-300 transition-colors ease-out border border-slate-700;
+		}
+	}
 }
