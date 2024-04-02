@@ -9,13 +9,14 @@ import { ErrorHandlerService } from '../../service/error/error.service';
 import { CustomerService } from '../../service/customer.service';
 import { FadeIn, SlideIn } from '../../shared/transition/animation';
 import { createTable } from '../../service/data-table/dataTable';
-import { Column } from '../../service/data-table/classes/Column';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 
 @Component({
 	selector: 'app-customer',
 	standalone: true,
 	animations: [FadeIn(200, 200, false), SlideIn(200, 200)],
-	imports: [CommonModule, ReactiveFormsModule, FormsModule, LucideAngularModule],
+	imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterLink, RouterLinkActive, LucideAngularModule, SidebarComponent],
 	templateUrl: './customer.component.html',
 	styleUrl: './customer.component.scss'
 })
@@ -25,25 +26,25 @@ export class CustomerComponent implements OnInit {
 	dataTableService = createTable(this.tableData);
 
 	columnConfig = this.dataTableService.createColumns<any>([
-		new Column({
+		this.dataTableService.column({
 			header: 'No.',
 			accessor: (index: any) => {
 				return index + 1;
 			}
 		}),
-		new Column({
+		this.dataTableService.column({
 			header: 'Id',
 			accessor: 'id'
 		}),
-		new Column({
+		this.dataTableService.column({
 			header: 'Name',
 			accessor: 'name'
 		}),
-		new Column({
+		this.dataTableService.column({
 			header: 'Description',
 			accessor: 'description'
 		}),
-		new Column({
+		this.dataTableService.column({
 			header: 'Alias',
 			accessor: 'alias'
 		})
@@ -61,6 +62,7 @@ export class CustomerComponent implements OnInit {
 	hasNext: boolean = false;
 	hasPrev: boolean = false;
 	lastPage: boolean = true;
+	totalPage: number = 1;
 
 	// pop up
 	activeLayer: string[] = [];
@@ -105,44 +107,12 @@ export class CustomerComponent implements OnInit {
 
 	next() {
 		if (this.hasNext == true) {
-			this.customerService
-				.getCustomers({
-					totalItemsPerPage: 3,
-					currentPage: this.currentPage + 1
-				})
-				.subscribe({
-					next: (customers) => {
-						this.currentPage = customers.body.currentPage;
-						this.hasNext = customers.body.hasNext;
-						this.hasPrev = customers.body.hasPrev;
-						this.lastPage = customers.body.lastPage;
-
-						this.customers = customers.body.data;
-						this.tableData.update((v) => customers.body.data);
-					},
-					error: (error) => console.log(error)
-				});
+			this.getNewData(this.currentPage + 1);
 		}
 	}
 	prev() {
 		if (this.hasPrev) {
-			this.customerService
-				.getCustomers({
-					totalItemsPerPage: 3,
-					currentPage: this.currentPage - 1
-				})
-				.subscribe({
-					next: (customers) => {
-						this.currentPage = customers.body.currentPage;
-						this.hasNext = customers.body.hasNext;
-						this.hasPrev = customers.body.hasPrev;
-						this.lastPage = customers.body.lastPage;
-
-						this.customers = customers.body.data;
-						this.tableData.update((v) => customers.body.data);
-					},
-					error: (error) => console.log(error)
-				});
+			this.getNewData(this.currentPage - 1);
 		}
 	}
 	refresh() {
@@ -164,14 +134,36 @@ export class CustomerComponent implements OnInit {
 		this.customerService.recoverCustomer(id).subscribe({ next: () => this.refresh() });
 	}
 
+	getNewData(toPage: number, totalItemsPerPage: number = 5) {
+		this.customerService
+			.getCustomers({
+				totalItemsPerPage: totalItemsPerPage,
+				currentPage: toPage
+			})
+			.subscribe({
+				next: (customers) => {
+					console.log(customers);
+					this.currentPage = customers.body.currentPage;
+					this.hasNext = customers.body.hasNext;
+					this.hasPrev = customers.body.hasPrev;
+					this.lastPage = customers.body.lastPage;
+
+					this.customers = customers.body.data;
+					this.tableData.update((v) => customers.body.data);
+				},
+				error: (error) => console.log(error)
+			});
+	}
+
 	ngOnInit(): void {
 		this.customerService
 			.getCustomers({
-				totalItemsPerPage: 3,
+				totalItemsPerPage: 5,
 				currentPage: 0
 			})
 			.subscribe({
 				next: (customers) => {
+					this.totalPage = customers.body.totalPage;
 					this.currentPage = customers.body.currentPage;
 					this.hasNext = customers.body.hasNext;
 					this.hasPrev = customers.body.hasPrev;

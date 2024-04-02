@@ -1,3 +1,4 @@
+<!-- modal create-->
 @if(activeLayer.includes("form-create")) {
 <div
 	[@fadeIn]
@@ -48,18 +49,21 @@
 			<div class="w-full flex justify-between items-center gap-3">
 				<button
 					type="reset"
-					class="cancel-btn px-4 py-2.5 text-sm bg-slate-300 active:bg-slate-400 mx-auto w-1/2 transition-colors"
+					class="cancel-btn px-4 py-2.5 text-sm border border-slate-300 active:bg-slate-300 mx-auto w-1/2 transition-colors cursor-pointer"
 					(click)="hide($event, 'form-create')">
 					Cancel
 				</button>
 				<input
 					type="submit"
-					class="px-4 py-2.5 text-sm bg-sky-300 active:bg-sky-400 mx-auto w-1/2 transition-colors" />
+					value="Create"
+					class="px-4 py-2.5 text-sm bg-sky-300 active:bg-sky-400 mx-auto w-1/2 transition-colors cursor-pointer" />
 			</div>
 		</form>
 	</div>
 </div>
-} @if(activeLayer.includes("form-edit")) {
+}
+<!-- modal show & update-->
+@if(activeLayer.includes("form-edit")) {
 <div
 	[@fadeIn]
 	class="parent absolute z-30 inset-0 bg-slate-700/50 justify-end flex overflow-hidden"
@@ -67,7 +71,7 @@
 	<div
 		[@slideIn]
 		class="absolute w-full md:w-3/5 xl:w-2/5 h-full bg-white items-center overflow-y-auto flex flex-col py-4">
-		<p class="font-bold text-lg pt-8">Edit Customer</p>
+		<p class="font-bold text-lg pt-8">Detail Customer</p>
 		<form
 			(submit)="saveCustomer()"
 			[formGroup]="customerForm"
@@ -105,6 +109,7 @@
 				</button>
 				<input
 					type="submit"
+					value="Update"
 					class="px-4 py-2.5 text-sm bg-sky-300 active:bg-sky-400 mx-auto w-1/2 transition-colors" />
 			</div>
 		</form>
@@ -112,47 +117,47 @@
 </div>
 }
 
-<div class="flex w-full justify-between h-full overflow-hidden">
-	<div class="w-1/6 h-full bg-slate-200 divide-y divide-white">
-		<p
-			class="w-full text-sm font-semibold cursor-pointer hover:bg-slate-100 px-4 py-4 items-center flex"
-			>Menu</p
-		>
-		<p
-			class="w-full text-sm font-semibold cursor-pointer hover:bg-slate-100 px-4 py-4 items-center flex"
-			>Home</p
-		>
-		<p
-			class="w-full text-sm font-semibold cursor-pointer hover:bg-slate-100 px-4 py-4 items-center flex"
-			>Engine List</p
-		>
-		<p
-			class="w-full text-sm font-semibold cursor-pointer hover:bg-slate-100 px-4 py-4 items-center flex"
-			>Engine Preservation</p
-		>
-	</div>
-	<div class="w-full">
-		<div class="my-3 w-full flex justify-center items-center">
-			<div
-				class="mx-auto w-[80%] rounded-lg mb-2 bg-slate-200 p-4 flex justify-between">
-				<h1 class="text-2xl font-bold text-slate-600">Customer Data</h1>
-				<div class="space-x-2">
+<div class="flex justify-between h-full overflow-hidden">
+	<app-sidebar></app-sidebar>
+	<div
+		class="w-full mx-4 mt-4 bg-white flex flex-col justify-start items-center h-full">
+		<div class="h-fit flex-shrink-0 w-full overflow-hidden">
+			<div class="mx-auto w-[90%] pb-2 pt-10 flex justify-between">
+				<h1 class="text-2xl font-bold text-slate-600">List of Customers</h1>
+			</div>
+			<div class="mx-auto w-[90%] gap-3 pb-8 flex justify-between items-center">
+				<div class="flex-1">
+					<input
+						type="text"
+						class="h-10 py-2 text-sm px-3 w-full outline-none border border-slate-300 focus:border-slate-400 rounded" />
+				</div>
+				<div class="gap-3 w-fit flex">
 					<button
-						class="text-sm px-4 py-2 bg-blue-300"
+						class="text-sm h-10 w-fit px-4 py-2 bg-white border border-blue-300 flex gap-2 items-center justify-center rounded truncate"
 						(click)="show('form-create')">
-						Add Data
+						<lucide-icon
+							class="text-red h-full"
+							name="sliders-horizontal"
+							[size]="14" />
+						<span class="hidden xl:block"> Filter </span>
 					</button>
 					<button
-						class="text-sm px-4 py-2 bg-blue-300"
+						class="text-sm h-10 w-fit px-4 py-2 bg-white border border-blue-300 flex gap-2 items-center justify-center rounded truncate"
 						(click)="show('form-create')">
-						Column
+						<lucide-icon class="text-red h-full" name="filter-x" [size]="14" />
+						<span class="hidden xl:block">Column</span>
+					</button>
+					<button
+						class="text-sm h-10 w-fit px-4 py-2 bg-blue-300 flex gap-2 items-center justify-center rounded truncate"
+						(click)="show('form-create')">
+						<lucide-icon class="text-red h-full" name="plus" [size]="14" />
+						<span class="hidden xl:block">Add Customer</span>
 					</button>
 				</div>
 			</div>
 		</div>
-
-		<div class="mx-auto w-[80%] rounded-lg overflow-hidden">
-			<table>
+		<div class="w-full max-h-[70%] flex-shrink-0 overflow-auto">
+			<table class="min-w-full bg-white">
 				<thead>
 					@for (headerRow of headerRows(); track $index) {
 					<tr role="row">
@@ -162,19 +167,19 @@
 							[colSpan]="cell.colspan"
 							(click)="cell.state.sort(cell.id)">
 							{{ cell.header }}
-							<span class="absolute gap-2">
-								@if (cell.state.sortOrder() === 'asc') {
-								<lucide-icon
-									class="text-slate-600 h-full"
-									name="arrow-down"
-									[size]="18" />
-								} @else if (cell.state.sortOrder() === 'desc') {
-								<lucide-icon
-									class="text-slate-600 h-full"
-									name="arrow-up"
-									[size]="18" />
-								}
-							</span>
+							<!-- <span class="absolute top-[50%] h-full bg-red-300"> -->
+							@if (cell.state.sortOrder() === 'asc') {
+							<lucide-icon
+								class="text-slate-600 absolute top-1/2 right-1.5 align-middle -mt-[3.5px]"
+								name="arrow-down"
+								[size]="14" />
+							} @else if (cell.state.sortOrder() === 'desc') {
+							<lucide-icon
+								class="text-slate-600 absolute top-1/2 right-1.5 align-middle -mt-[3.5px]"
+								name="arrow-up"
+								[size]="14" />
+							}
+							<!-- </span> -->
 						</th>
 						}
 					</tr>
@@ -187,20 +192,36 @@
 						<td role="cell">{{ cell.value }}</td>
 						}
 					</tr>
+					} @empty {
+					<tr>
+						<td colspan="100%"> 😭 No Data </td>
+					</tr>
 					}
 				</tbody>
 			</table>
-			<div
-				class="justify-between items-center w-full h-12 flex bg-slate-200 overflow-hidden">
-				<button
-					class="px-8 py-4 hover:bg-sky-300 text-sm font-semibold transition-colors"
-					>Next</button
-				>
-				<button
-					class="px-8 py-4 hover:bg-sky-300 text-sm font-semibold transition-colors"
-					>Prev</button
-				>
-			</div>
+		</div>
+		<div
+			class="justify-center items-center gap-2 w-full h-14 bg-slate-100 flex overflow-hidden">
+			<button
+				class="p-2 hover:bg-slate-300 rounded-full text-sm font-semibold transition-colors"
+				[class]="hasPrev ? 'bg-blue-200' : 'bg-slate-100'"
+				(click)="prev()">
+				<lucide-icon class="text-slate-600" name="chevron-left" [size]="16" />
+			</button>
+			@for (page of [].constructor(totalPage); track $index) {
+			<button
+				class="py-2 px-4 text-sm text-slate-600 hover:bg-blue-200 font-bold transition-colors"
+				[class]="currentPage === $index ? ' bg-slate-300' : ''"
+				(click)="getNewData($index)"
+				>{{ $index + 1 }}</button
+			>
+			}
+			<button
+				class="p-2 hover:bg-slate-300 rounded-full text-sm font-semibold transition-colors"
+				[class]="hasNext ? 'bg-blue-200' : 'bg-slate-100'"
+				(click)="next()">
+				<lucide-icon class="text-slate-600" name="chevron-right" [size]="16" />
+			</button>
 		</div>
 	</div>
 </div>
