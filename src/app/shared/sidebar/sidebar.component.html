@@ -1,0 +1,45 @@
+<div class="mx-auto relative hidden lg:block w-full h-full bg-white first:pt-2">
+	<a
+		routerLink="/"
+		class="w-full text-sm font-semibold cursor-pointer text-slate-600 hover:text-slate-800 px-4 py-2.5 items-center flex gap-2">
+		<lucide-icon class="text-red h-full" name="layout-grid" [size]="14" />
+		<span class="hidden md:block truncate">Home</span>
+	</a>
+	<p
+		class="w-full text-xxs font-bold cursor-pointer text-blue-600 px-4 pb-2 pt-6 uppercase items-center flex">
+		Apps
+	</p>
+	@for (menu of appMenu; track $index) {
+	<a
+		routerLinkActive="pageActive"
+		routerLink="/app{{ menu.href }}"
+		class="w-full text-sm font-semibold cursor-pointer text-slate-600 hover:text-slate-800 px-4 py-2.5 items-center flex gap-2">
+		<lucide-icon
+			class="text-red h-full pageActive"
+			name="{{ menu.icon }}"
+			[size]="14" />
+		<span class="hidden md:block truncate">{{ menu.title }}</span>
+	</a>
+	}
+	<p
+		class="w-full text-xxs font-bold cursor-pointer text-blue-600 px-4 pb-2 pt-6 uppercase items-center flex">
+		Manages
+	</p>
+	@for (menu of manageMenu; track $index) {
+	<a
+		routerLinkActive="pageActive"
+		routerLink="/manage{{ menu.href }}"
+		class="w-full text-sm font-semibold cursor-pointer text-slate-600 hover:text-slate-800 px-4 py-2.5 items-center flex gap-2">
+		<lucide-icon
+			class="text-red h-full pageActive"
+			name="{{ menu.icon }}"
+			[size]="14" />
+		<span class="hidden md:block truncate">{{ menu.title }}</span>
+	</a>
+	}
+	<div
+		class="py-4 bg-blue-400 absolute bottom-0 flex justify-center gap-3 w-full">
+		<p>dark</p>
+		<p>light</p>
+	</div>
+</div>
